@@ -2,101 +2,77 @@ package by.itacademy.nataliyabaravuliya.ui;
 
 import java.time.Duration;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import by.itacademy.nataliyabaravuliya.driver.steps.Steps;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import by.itacademy.nataliyabaravuliya.driver.pages.LoginPage;
+import by.itacademy.nataliyabaravuliya.driver.pages.YvesRocherPage;
+
 
 public class YvesRocherTest {
     WebDriver driver;
+    Steps steps;
 
-    @Before
+    @BeforeEach
     public void warmUp() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(chromeOptions);
         driver.get(YvesRocherPage.URL);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().deleteAllCookies();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        steps = new Steps(driver);
     }
 
     @Test
-    public void testYvesRocherLoginWithCorrectData() {
-        driver.findElement(By.xpath(YvesRocherPage.BTN_RECLAME)).click();
-        driver.findElement(By.xpath(YvesRocherPage.ICON_LOG_IN)).click();
-        driver.findElement(By.xpath(YvesRocherPage.BTN_AUTHORIZATION)).click();
-        driver.findElement(By.xpath(YvesRocherPage.INPUT_EMAIL)).sendKeys(UserPage.EMAIL_ACTUAL);
-        driver.findElement(By.xpath(YvesRocherPage.INPUT_PASSWORD)).sendKeys(UserPage.PASSWORD_ACTUAL);
-        driver.findElement(By.xpath(YvesRocherPage.BTN_ENTER)).click();
-        WebElement personal = driver.findElement(By.xpath(UserPage.INPUT_USER_NAME_AUTORIZATION));
-        Assert.assertTrue(personal.isDisplayed());
+    public void tesLoginWithCorrectData() {
+        steps.loginWithCorrectData();
+        WebElement personal = driver.findElement(By.xpath(LoginPage.INPUT_USER_NAME_AUTORIZATION));
+        Assertions.assertTrue(personal.isDisplayed());
     }
 
     @Test
-    public void testYvesRocherLoginFormWithEmptyPassword() {
-        driver.findElement(By.xpath(YvesRocherPage.BTN_RECLAME)).click();
-        driver.findElement(By.xpath(YvesRocherPage.ICON_LOG_IN)).click();
-        driver.findElement(By.xpath(YvesRocherPage.BTN_AUTHORIZATION)).click();
-        driver.findElement(By.xpath(YvesRocherPage.INPUT_EMAIL)).sendKeys(UserPage.EMAIL_ACTUAL);
-        driver.findElement(By.xpath(YvesRocherPage.BTN_ENTER)).click();
-        Assert.assertEquals("Это поле является обязательным", driver.findElement(By.xpath(YvesRocherPage.INPUT_NO_PASSWORD)).getText());
+    public void testLoginFormWithEmptyPassword() {
+        steps.loginFormWithEmptyPassword();
+        Assertions.assertEquals("Это поле является обязательным",
+                driver.findElement(By.xpath(YvesRocherPage.INPUT_NO_PASSWORD)).getText());
     }
 
     @Test
-    public void testYvesRocherLoginFormWithEmptyLogin() { //путой e-mail
-        driver.findElement(By.xpath(YvesRocherPage.BTN_RECLAME)).click();
-        driver.findElement(By.xpath(YvesRocherPage.ICON_LOG_IN)).click();
-        driver.findElement(By.xpath(YvesRocherPage.BTN_AUTHORIZATION)).click();
-        driver.findElement(By.xpath(YvesRocherPage.INPUT_PASSWORD)).sendKeys(UserPage.PASSWORD_ACTUAL);
-        driver.findElement(By.xpath(YvesRocherPage.BTN_ENTER)).click();
-        Assert.assertEquals("Это поле является обязательным", driver.findElement(By.xpath(YvesRocherPage.INPUT_NO_EMAIL)).getText());
+    public void testLoginFormWithEmptyLogin() {
+        steps.loginFormWithEmptyLogin();
+        Assertions.assertEquals("Это поле является обязательным",
+                driver.findElement(By.xpath(YvesRocherPage.INPUT_NO_EMAIL)).getText());
     }
 
     @Test
-    public void testYvesRocherLoginFormWithEmptyCredentials() {
-        driver.findElement(By.xpath(YvesRocherPage.BTN_RECLAME)).click();
-        driver.findElement(By.xpath(YvesRocherPage.ICON_LOG_IN)).click();
-        driver.findElement(By.xpath(YvesRocherPage.BTN_AUTHORIZATION)).click();
-        driver.findElement(By.xpath(YvesRocherPage.BTN_ENTER)).click();
-        Assert.assertEquals("Это поле является обязательным", driver.findElement(By.xpath(YvesRocherPage.INPUT_NO_PASSWORD)).getText());
-        Assert.assertEquals("Это поле является обязательным", driver.findElement(By.xpath(YvesRocherPage.INPUT_NO_EMAIL)).getText());
+    public void testFormWithEmptyCredentials() {
+        steps.formWithEmptyCredentials();
+        Assertions.assertEquals("Это поле является обязательным",
+                driver.findElement(By.xpath(YvesRocherPage.INPUT_NO_PASSWORD)).getText());
+        Assertions.assertEquals("Это поле является обязательным",
+                driver.findElement(By.xpath(YvesRocherPage.INPUT_NO_EMAIL)).getText());
     }
 
     @Test
-    public void Test5() {
-        driver.findElement(By.xpath(YvesRocherPage.BTN_RECLAME)).click();
-        driver.findElement(By.xpath(YvesRocherPage.ICON_LOG_IN)).click();
-        driver.findElement(By.xpath(YvesRocherPage.BTN_AUTHORIZATION)).click();
-        driver.findElement(By.xpath(YvesRocherPage.INPUT_EMAIL)).sendKeys(UserPage.EMAIL_ACTUAL);
-        driver.findElement(By.xpath(YvesRocherPage.INPUT_PASSWORD)).sendKeys(UserPage.PASSWORD_ACTUAL);
-        driver.findElement(By.xpath(YvesRocherPage.BTN_ENTER)).click();
-        driver.findElement(By.xpath(YvesRocherPage.INPUT_SEARCH)).click();
-        driver.findElement(By.xpath(YvesRocherPage.INPUT_SEARCH)).sendKeys(ShoppingPage.HAND_CREAM);
-        driver.findElement(By.xpath(YvesRocherPage.BTN_SEARCH)).click();
-        driver.findElement(By.xpath(YvesRocherPage.ADD_HAND_CREAM)).click();
-        driver.findElement(By.xpath(YvesRocherPage.BTN_CART)).click();
-        Assert.assertEquals("Крем Для Рук «Бурбонская Ваниль»", driver.findElement(By.xpath(YvesRocherPage.HAND_CREAM_MY_CART)).getText());
-        driver.quit();
-
+    public void testAddProductSearchString() {
+        steps.addProductSearchString();
+        Assertions.assertTrue(driver.findElement(By.xpath(YvesRocherPage.IMAGE_OF_PRODUCT)).isDisplayed());
     }
+
     @Test
-    public void Test6() {
-        driver.findElement(By.xpath(YvesRocherPage.BTN_RECLAME)).click();
-        driver.findElement(By.xpath(YvesRocherPage.ICON_LOG_IN)).click();
-        driver.findElement(By.xpath(YvesRocherPage.BTN_AUTHORIZATION)).click();
-        driver.findElement(By.xpath(YvesRocherPage.INPUT_EMAIL)).sendKeys(UserPage.EMAIL_ACTUAL);
-        driver.findElement(By.xpath(YvesRocherPage.INPUT_PASSWORD)).sendKeys(UserPage.PASSWORD_ACTUAL);
-        driver.findElement(By.xpath(YvesRocherPage.BTN_ENTER)).click();
-
-
+    public void testAddAProductFromTheCatalog() {
+        steps.addAProductFromTheCatalog();
+        Assertions.assertEquals("Код продукта 71463",
+                driver.findElement(By.xpath(YvesRocherPage.CODE_OF_PRODUCT)).getText());
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         driver.quit();
     }
