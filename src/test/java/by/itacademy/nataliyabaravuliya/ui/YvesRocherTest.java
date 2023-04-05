@@ -1,39 +1,17 @@
 package by.itacademy.nataliyabaravuliya.ui;
 
-import java.time.Duration;
-
-import by.itacademy.nataliyabaravuliya.driver.steps.Steps;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import by.itacademy.nataliyabaravuliya.driver.pages.LoginPage;
-import by.itacademy.nataliyabaravuliya.driver.pages.YvesRocherPage;
+import by.itacademy.nataliyabaravuliya.pages.LoginPage;
+import by.itacademy.nataliyabaravuliya.pages.YvesRocherPage;
 
 
-public class YvesRocherTest {
-    WebDriver driver;
-    Steps steps;
-
-    @BeforeEach
-    public void warmUp() {
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--remote-allow-origins=*");
-        driver = new ChromeDriver(chromeOptions);
-        driver.get(YvesRocherPage.URL);
-        driver.manage().window().maximize();
-        driver.manage().deleteAllCookies();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-        steps = new Steps(driver);
-    }
+public class YvesRocherTest extends BaseTest {
 
     @Test
     public void tesLoginWithCorrectData() {
         steps.loginWithCorrectData();
-        WebElement personal = driver.findElement(By.xpath(LoginPage.INPUT_USER_NAME_AUTORIZATION));
-        Assertions.assertTrue(personal.isDisplayed());
+        Assertions.assertTrue(driver.findElement(By.xpath(LoginPage.INPUT_USER_NAME_AUTORIZATION)).isDisplayed());
     }
 
     @Test
@@ -66,14 +44,9 @@ public class YvesRocherTest {
     }
 
     @Test
-    public void testAddAProductFromTheCatalog() {
+    public void testAddProductFromTheCatalog() {
         steps.addAProductFromTheCatalog();
-        Assertions.assertEquals("Код продукта 71463",
+        Assertions.assertEquals("Код продукта 0007",
                 driver.findElement(By.xpath(YvesRocherPage.CODE_OF_PRODUCT)).getText());
-    }
-
-    @AfterEach
-    public void tearDown() {
-        driver.quit();
     }
 }

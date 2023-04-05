@@ -1,4 +1,4 @@
-package by.itacademy.nataliyabaravuliya.driver.driver;
+package by.itacademy.nataliyabaravuliya.driver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Driver {
     private static WebDriver driver;
+
     public static WebDriver getDriver() {
         if (driver == null) {
             ChromeOptions chromeOptions = new ChromeOptions();

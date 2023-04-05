@@ -1,4 +1,4 @@
-package by.itacademy.nataliyabaravuliya.driver.util;
+package by.itacademy.nataliyabaravuliya.util;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
