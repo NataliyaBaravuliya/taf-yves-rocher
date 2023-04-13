@@ -2,6 +2,5 @@
 
 ### Taf YvesRocher
 
-#### Framework built on Maven contains UI and API test of the 
-
-https://www.y-r.by/
+#### The project implemented UI and API tests for the https://www.y-r.by website.
+Autotests are written in Java 17 using JUnit. Project builder - Maven. Selenium framework used for UI tests, RestAssured framework used for API tests.
